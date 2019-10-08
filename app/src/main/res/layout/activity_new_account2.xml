@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/LinearLayout_New_Account"
+    android:gravity="center"
+    android:background="@drawable/login_gradient">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:src="@drawable/logo_login">
+
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/newlayoutstyle"
+        android:id="@+id/Linear_Within_Linear_New_Account">
+    <EditText
+        android:id="@+id/User_Name_New_Account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="23sp"
+        android:hint="UserName">
+    </EditText>
+
+        <EditText
+            android:id="@+id/Password_New_Account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:hint="Enter Your Password"
+            android:inputType="textPassword"
+            android:textSize="23sp"></EditText>
+    <EditText
+        android:id="@+id/Re_Password_New_Account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="23sp"
+        android:hint="Re-Enter Your Password"
+        android:inputType="textPassword"
+        android:layout_marginTop="20sp">
+    </EditText>
+    </LinearLayout>
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/Submit_New_Account"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:text="Submit"
+        android:textSize="23sp"
+        android:background="@drawable/newlayoutstyle"
+        android:layout_marginTop="20sp"/>
+</LinearLayout>

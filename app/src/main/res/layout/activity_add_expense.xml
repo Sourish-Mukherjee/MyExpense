@@ -1,0 +1,71 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height= "match_parent"
+    android:layout_width= "match_parent"
+    android:background="@drawable/login_gradient">
+    <LinearLayout
+        android:id="@+id/LL1"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="100dp"
+        android:weightSum="2">
+
+        <EditText
+            android:id="@+id/Name"
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:hint="Name"
+            android:textAlignment="center"
+            android:textColorHint="#FFFFFF"
+            android:textColor="#FFFFFF"
+            android:textSize="23sp" />
+        <EditText
+            android:id="@+id/Amount"
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:textColor="#FFFFFF"
+            android:hint="Amount (₹)"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColorHint="#FFFFFF"
+            android:textSize="23sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:id="@+id/LL2"
+        android:layout_below="@+id/LL1">
+        <TextView
+            android:id="@+id/Date"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:text="Select Date"
+            android:textColor="#FFFFFF"
+            android:textSize="23sp"
+            android:gravity="center_horizontal|center_vertical" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_below="@+id/LL2">
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="25dp"
+            android:id="@+id/Spinner1"/>?
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:text="SAVE"
+            android:textSize="23sp"
+            android:textColor="#FFFFFF"
+            android:id="@+id/save"
+            android:gravity="center_horizontal|center_vertical"/>
+
+    </LinearLayout>
+</RelativeLayout>

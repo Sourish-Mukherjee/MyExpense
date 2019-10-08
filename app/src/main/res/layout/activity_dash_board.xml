@@ -1,0 +1,58 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height= "match_parent"
+    android:layout_width= "match_parent"
+    android:background="@drawable/gradient_for_dashboard_select_dates">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:id="@+id/DashboardLL0"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:id="@+id/DashboardLL1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/DateForDashBoard"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:text="Select Date"
+                android:textColor="#000000"
+                android:textSize="23sp"
+                android:gravity="center_horizontal|center_vertical" />
+            <Spinner
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/type_selector"
+                android:textSize="23sp"
+                android:layout_marginStart="10dp"
+                android:gravity="center_horizontal|center_vertical"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_below="@id/DashboardLL0"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:id="@+id/DashboardLL2"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TotalExp"
+                android:textSize="23sp"
+                android:textColor="#000000"
+                android:gravity="center_horizontal|center_vertical">
+            </TextView>
+        </LinearLayout>
+    </LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ListView1"
+        android:layout_below="@id/DashboardLL0"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/activity_dash_below_piechart">
+    </ListView>
+</RelativeLayout>

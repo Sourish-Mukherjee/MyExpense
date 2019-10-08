@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/login_gradient"
+    android:layout_width="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/PieLinearLayout0"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/activity_dash_below_piechart">
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/Actual_Dash_Spinner">
+        </Spinner>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/MainPieLayout"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <lecho.lib.hellocharts.view.PieChartView
+            android:id="@+id/chart"
+            android:layout_width="wrap_content"
+            android:layout_height="350dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/PieLinearLayout1"
+        android:gravity="center"
+        android:weightSum="2"
+        android:background="@drawable/activity_dash_below_piechart"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="More Details"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/More_Details"
+            android:textColor="#000000"
+            android:textSize="23sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:id="@+id/Add_Expense"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Add Expense"
+            android:textColor="#000000"
+            android:textSize="23sp">
+        </TextView>
+    </LinearLayout>
+</LinearLayout>
