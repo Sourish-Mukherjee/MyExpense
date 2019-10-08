@@ -34,7 +34,6 @@ public class MyCustomListAdapter extends ArrayAdapter<ExpenseDetails> {
         View view = layoutInflater.inflate(R.layout.row_layout,null);
         TextView tv = view.findViewById(R.id.label);
         ImageView iv = view.findViewById(R.id.type_icon);
-
         ExpenseDetails expenseDetails = list.get(position);
         tv.setText(expenseDetails.getText());
         iv.setImageDrawable(context.getResources().getDrawable(expenseDetails.getImage()));

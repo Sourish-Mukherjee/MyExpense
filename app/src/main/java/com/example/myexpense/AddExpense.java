@@ -65,10 +65,15 @@ public class AddExpense extends AppCompatActivity implements AdapterView.OnItemS
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DataBaseHelper.writeData(dataBaseHelper.getWritableDatabase(), date.getText().toString(), amount.getText().toString(),
-                        name.getText().toString(), getChosen());
-                Toast.makeText(getApplicationContext(), "Data Stored!", Toast.LENGTH_LONG).show();
-                finish();
+                if(amount.getText().toString().equals("")||name.getText().toString().equals("")||
+                        date.getText().toString().equals("Select Date")||getChosen().equals("SelectCategory"))
+                    Toast.makeText(getApplicationContext(),"Fill All The Required Info",Toast.LENGTH_SHORT).show();
+                else {
+                    DataBaseHelper.writeData(dataBaseHelper.getWritableDatabase(), date.getText().toString(), amount.getText().toString(),
+                            name.getText().toString(), getChosen());
+                    Toast.makeText(getApplicationContext(), "Data Stored!", Toast.LENGTH_LONG).show();
+                    finish();
+                }
             }
         });
     }

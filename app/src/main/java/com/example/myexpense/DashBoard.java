@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,8 +33,10 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemSe
     private ListView lv;
     private List<ExpenseDetails> listOfExpense;
     private MyCustomListAdapter mc;
-
+    private LinearLayout imageLinearLayout;
+    private ImageView dashboard_imageview_1;
     private String chosen;
+    private int listposition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,25 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemSe
         calender();
         spinnerFunction();
         typeSelector.setOnItemSelectedListener(this);
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long arg3) {
+                imageLinearLayout.setVisibility(View.VISIBLE);
+                listposition = position;
+                return false;
+            }
+        });
+        dashboard_imageview_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataBaseHelper.deleteDataFromTable(dataBaseHelper.getWritableDatabase(), listOfExpense.get(listposition).getText());
+                listOfExpense.remove(listOfExpense.get(listposition));
+                Toast.makeText(getApplicationContext(),"Item Deleted!",Toast.LENGTH_SHORT).show();
+                mc.notifyDataSetChanged();
+                lv.setAdapter(mc);
+            }
+        });
     }
 
     private void calender() {
@@ -73,6 +96,8 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemSe
 
     private void initialize() {
         totalExp = findViewById(R.id.TotalExp);
+        imageLinearLayout = findViewById(R.id.ImageLinearLayout);
+        dashboard_imageview_1 = findViewById(R.id.Dashboard_imageview_1);
         dateForDashboard = findViewById(R.id.DateForDashBoard);
         typeSelector = findViewById(R.id.type_selector);
         lv = findViewById(R.id.ListView1);
@@ -107,13 +132,13 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemSe
             total = total.replaceAll(category, "");
             listOfExpense.add(new ExpenseDetails(id, total));
             num--;
-            totalExp.setText("Expenditure\n₹".concat(String.valueOf(DataBaseHelper.getTotalExpenses(dataBaseHelper.getReadableDatabase()))));
+            totalExp.setText("Expenditure:  ₹".concat(String.valueOf(DataBaseHelper.getTotalExpenses(dataBaseHelper.getReadableDatabase()))));
         }
         MyCustomListAdapter mc = new MyCustomListAdapter(this, R.layout.row_layout, listOfExpense);
         lv.setAdapter(mc);
         if (listOfExpense.isEmpty()) {
             lv.setVisibility(View.INVISIBLE);
-            totalExp.setText("Expenditure\n₹0");
+            totalExp.setText("Expenditure:  ₹0");
         } else {
             lv.setVisibility(View.VISIBLE);
         }
@@ -149,13 +174,13 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemSe
             total = total.replaceAll(category, "");
             listOfExpense.add(new ExpenseDetails(id, total));
             num--;
-            totalExp.setText("Expenditure\n₹".concat(String.valueOf(DataBaseHelper.getMonthlyExpenses())));
+            totalExp.setText("Expenditure:  ₹".concat(String.valueOf(DataBaseHelper.getMonthlyExpenses())));
         }
         MyCustomListAdapter mc = new MyCustomListAdapter(getApplicationContext(), R.layout.row_layout, listOfExpense);
         lv.setAdapter(mc);
         if (listOfExpense.isEmpty()) {
             lv.setVisibility(View.INVISIBLE);
-            totalExp.setText("Expenditure\n₹0");
+            totalExp.setText("Expenditure:  ₹0");
         } else {
             lv.setVisibility(View.VISIBLE);
         }

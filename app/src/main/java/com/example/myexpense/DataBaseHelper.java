@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
+
+import static android.os.Build.ID;
 
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -15,6 +18,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static int month_exp_food_total = 0;
     private static int month_exp_travel_total = 0;
     private static int month_exp_entertainment_total = 0;
+    private static final String COL1 = "UID";
 
     public DataBaseHelper(Context context) {
         super(context, "Trans.db", null, 1);
@@ -22,7 +26,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table TransDetails (date text, amount real, name text, category text )");
+        db.execSQL("create table TransDetails (UID INTEGER PRIMARY KEY AUTOINCREMENT, date text, amount real, name text, category text )");
         db.execSQL("create table LoginDetails (username text, password text )");
     }
 
@@ -45,39 +49,39 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static String getData(SQLiteDatabase db, int num) {
         String resultfromsql;
         String category;
-        String projection[] = {"date", "amount", "name", "category"};
+        String projection[] = {"UID", "date", "amount", "name", "category"};
         Cursor c = db.query("TransDetails", projection, null, null, null, null, null);
         c.moveToPosition(num - 1);
-        resultfromsql = " Name  : " + c.getString(2);
-        resultfromsql += " Date : " + c.getString(0);
-        resultfromsql += " Amount : ₹" + c.getString(1);
-        resultfromsql += category = c.getString(3);
-        if ("" + c.getString(1) == "" || Integer.parseInt(c.getString(1)) == 0
-                || (c.getString(0).equals(DashBoard.getDateForDashboard()) == false))
+        resultfromsql = " Name  : " + c.getString(3);
+        resultfromsql += " Date : " + c.getString(1);
+        resultfromsql += " Amount : ₹" + c.getString(2);
+        resultfromsql += c.getString(4);
+        if ("" + c.getString(2) == "" || Integer.parseInt(c.getString(2)) == 0
+                || (c.getString(1).equals(DashBoard.getDateForDashboard()) == false))
             resultfromsql = null;
         else
-            day_exp_total += Integer.parseInt("" + c.getString(1));
+            day_exp_total += Integer.parseInt("" + c.getString(2));
         return resultfromsql;
     }
 
     public static String getMonthData(SQLiteDatabase db, String month, int num) {
         String resultfromsql = null;
-        String projection[] = {"date", "amount", "name", "category"};
+        String projection[] = {"UID", "date", "amount", "name", "category"};
         Cursor c = db.query("TransDetails", projection, null, null, null, null, null);
         c.moveToPosition(num - 1);
         String datefromsql = month;
-        resultfromsql = " Name  : " + c.getString(2);
-        resultfromsql += " Date : " + c.getString(0);
-        resultfromsql += " Amount : ₹" + c.getString(1);
-        String givenDate = c.getString(0);
+        resultfromsql = " Name  : " + c.getString(3);
+        resultfromsql += " Date : " + c.getString(1);
+        resultfromsql += " Amount : ₹" + c.getString(2);
+        String givenDate = c.getString(1);
         if (!(givenDate.indexOf('/') == -1))
             givenDate = givenDate.substring(givenDate.indexOf('/') + 1, givenDate.lastIndexOf('/'));
-        resultfromsql += c.getString(3);
-        if ("" + c.getString(1) == "" || Integer.parseInt(c.getString(1)) == 0 || givenDate.equals(datefromsql) == false)
+        resultfromsql += c.getString(4);
+        if ("" + c.getString(2) == "" || Integer.parseInt(c.getString(2)) == 0 || givenDate.equals(datefromsql) == false)
             resultfromsql = null;
         else {
-            checkPieTotal(c.getString(3), Integer.parseInt(c.getString(1)));
-            month_exp_total += Integer.parseInt("" + c.getString(1));
+            checkPieTotal(c.getString(4), Integer.parseInt(c.getString(2)));
+            month_exp_total += Integer.parseInt("" + c.getString(2));
         }
         return resultfromsql;
     }
@@ -97,7 +101,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             count = DatabaseUtils.queryNumEntries(db, "TransDetails");
         else
             count = DatabaseUtils.queryNumEntries(db, "LoginDetails");
-        db.close();
+        //db.close();
         return count;
     }
 
@@ -161,4 +165,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         DataBaseHelper.month_exp_entertainment_total = month_exp_entertainment_total;
     }
 
+    public static void deleteDataFromTable(SQLiteDatabase db, String name) {
+        int count = (int) getProfilesCount(db, "TransDetails");
+        String projection[] = {"UID", "date", "amount", "name", "category"};
+        Cursor c = db.query("TransDetails", projection, null, null, null, null, null);
+        while (count != 0) {
+            c.moveToPosition(count - 1);
+            String datafromSql = " Name  : " + c.getString(3);
+            datafromSql += " Date : " + c.getString(1);
+            datafromSql += " Amount : ₹" + c.getString(2);
+            if (datafromSql.equals(name)) {
+                int getid = Integer.parseInt(c.getString(0));
+                db.delete("TransDetails", COL1 + " = " + getid, null);
+                count--;
+                break;
+            }
+            count--;
+        }
+    }
 }
