@@ -80,11 +80,10 @@ public class Actual_Dash extends AppCompatActivity implements AdapterView.OnItem
                 + DataBaseHelper.getMonth_exp_entertainment_total()));
         PieChartData pieChartData = new PieChartData(pieData);
         pieChartData.setHasLabels(true).setValueLabelTextSize(12);
-        pieChartData.setHasCenterCircle(true).setCenterText1(month).
+        pieChartData.setHasCenterCircle(true).setCenterText1("Expenditure: "+System.lineSeparator()+"₹"+DataBaseHelper.getMonthlyExpenses()).
                 setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#F3E6E8"));
         pieChartView.setPieChartData(pieChartData);
     }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         chosen = parent.getItemAtPosition(position).toString();

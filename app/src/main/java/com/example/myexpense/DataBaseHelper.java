@@ -183,4 +183,24 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             count--;
         }
     }
+
+    public static int getMonthlyExpenseForPie(SQLiteDatabase db, String month) {
+        int count = (int) getProfilesCount(db, "TransDetails");
+        String projection[] = {"UID", "date", "amount", "name", "category"};
+        String datefromsql = month;
+        Cursor c = db.query("TransDetails", projection, null, null, null, null, null);
+        while (count != 0) {
+            c.moveToPosition(count - 1);
+            String givenDate = c.getString(1);
+            if (!(givenDate.indexOf('/') == -1))
+                givenDate = givenDate.substring(givenDate.indexOf('/') + 1, givenDate.lastIndexOf('/'));
+            else if ("" + c.getString(2) == "" || Integer.parseInt(c.getString(2)) == 0 || givenDate.equals(datefromsql) == false) {
+                count--;
+                continue;
+            } else
+                month_exp_total += Integer.parseInt("" + c.getString(2));
+            count--;
+        }
+        return month_exp_total;
+    }
 }

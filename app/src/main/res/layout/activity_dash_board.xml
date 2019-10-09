@@ -37,7 +37,7 @@
                 android:textSize="23sp"
                 android:gravity="center_horizontal|center_vertical" />
             <Spinner
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/type_selector"
                 android:textSize="23sp"

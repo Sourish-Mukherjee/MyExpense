@@ -60,8 +60,13 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemSe
             public void onClick(View v) {
                 DataBaseHelper.deleteDataFromTable(dataBaseHelper.getWritableDatabase(), listOfExpense.get(listposition).getText());
                 listOfExpense.remove(listOfExpense.get(listposition));
-                Toast.makeText(getApplicationContext(),"Item Deleted!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Item Deleted!", Toast.LENGTH_SHORT).show();
                 mc.notifyDataSetChanged();
+                imageLinearLayout.setVisibility(View.GONE);
+                if (listOfExpense.size() == 0) {
+                    listOfExpense.clear();
+                    mc = new MyCustomListAdapter(getApplicationContext(), R.layout.row_layout, listOfExpense);
+                }
                 lv.setAdapter(mc);
             }
         });
