@@ -46,9 +46,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.insert("TransDetails", null, values);
     }
 
-    public static String getData(SQLiteDatabase db, int num) {
+    public static String getData(SQLiteDatabase db, int num,String date) {
         String resultfromsql;
-        String category;
         String projection[] = {"UID", "date", "amount", "name", "category"};
         Cursor c = db.query("TransDetails", projection, null, null, null, null, null);
         c.moveToPosition(num - 1);
@@ -184,23 +183,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public static int getMonthlyExpenseForPie(SQLiteDatabase db, String month) {
-        int count = (int) getProfilesCount(db, "TransDetails");
+    public static void getExpenditureFromDate(SQLiteDatabase db, String month)
+    {
+        int total = (int) getProfilesCount(db,"TransDetails");
         String projection[] = {"UID", "date", "amount", "name", "category"};
-        String datefromsql = month;
         Cursor c = db.query("TransDetails", projection, null, null, null, null, null);
-        while (count != 0) {
-            c.moveToPosition(count - 1);
+        while(total!=0)
+        {
+            c.moveToPosition(total - 1);
             String givenDate = c.getString(1);
-            if (!(givenDate.indexOf('/') == -1))
-                givenDate = givenDate.substring(givenDate.indexOf('/') + 1, givenDate.lastIndexOf('/'));
-            else if ("" + c.getString(2) == "" || Integer.parseInt(c.getString(2)) == 0 || givenDate.equals(datefromsql) == false) {
-                count--;
+            if ("" + c.getString(2) == "" || Integer.parseInt(c.getString(2)) == 0
+                    || givenDate.equals(month) == false)
+            {
+                total--;
                 continue;
-            } else
-                month_exp_total += Integer.parseInt("" + c.getString(2));
-            count--;
+            }
+            else
+                day_exp_total += Integer.parseInt("" + c.getString(2));
+            total--;
         }
-        return month_exp_total;
     }
+
 }

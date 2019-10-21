@@ -117,7 +117,7 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemSe
         lv.setAdapter(mc);
         int num = (int) DataBaseHelper.getProfilesCount(dataBaseHelper.getReadableDatabase(), "TransDetails");
         while (num != 0) {
-            String total = DataBaseHelper.getData(dataBaseHelper.getReadableDatabase(), num);
+            String total = DataBaseHelper.getData(dataBaseHelper.getReadableDatabase(), num,null);
             if (total == null) {
                 num--;
                 continue;

@@ -13,6 +13,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.view.PieChartView;
@@ -24,12 +37,14 @@ public class Actual_Dash extends AppCompatActivity implements AdapterView.OnItem
     private TextView more_details, add_expense;
     private Spinner actual_dash_spinner;
     private String chosen;
-    private String month;
+    private BarChart barChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actual__dash);
+        NotifyService notifyService = new NotifyService(dataBaseHelper);
+        notifyService.displayNotification(getApplicationContext());
         more_details = findViewById(R.id.More_Details);
         add_expense = findViewById(R.id.Add_Expense);
         actual_dash_spinner = findViewById(R.id.Actual_Dash_Spinner);
@@ -56,7 +71,6 @@ public class Actual_Dash extends AppCompatActivity implements AdapterView.OnItem
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         actual_dash_spinner.setAdapter(adapter);
     }
-
     public void calculateEachCategory() {
         DataBaseHelper.setMonth_exp_food_total(0);
         DataBaseHelper.setMonth_exp_entertainment_total(0);
@@ -80,14 +94,14 @@ public class Actual_Dash extends AppCompatActivity implements AdapterView.OnItem
                 + DataBaseHelper.getMonth_exp_entertainment_total()));
         PieChartData pieChartData = new PieChartData(pieData);
         pieChartData.setHasLabels(true).setValueLabelTextSize(12);
-        pieChartData.setHasCenterCircle(true).setCenterText1("Expenditure: "+System.lineSeparator()+"₹"+DataBaseHelper.getMonthlyExpenses()).
+        pieChartData.setHasCenterCircle(true).setCenterText1("Expenditure: " + System.lineSeparator() + "₹" + DataBaseHelper.getMonthlyExpenses()).
                 setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#F3E6E8"));
         pieChartView.setPieChartData(pieChartData);
     }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         chosen = parent.getItemAtPosition(position).toString();
-        month = chosen;
         switch (chosen) {
             case "January":
                 chosen = "1";
